@@ -1,5 +1,3 @@
-var async = require('async');
-
 var gameCount = 0;
 
 var gridSize = {
@@ -132,30 +130,30 @@ module.exports = function(io) {
 
 				var currentRow = row;
 				var currentCol = col;
-				var x;
-				var y;
-
+				
 				if (z == 0) {
-					y = direction[0];
-					x = direction[1];
+					var y = direction[0];
+					var x = direction[1];
 				} else {
-					y = direction[2];
-					x = direction[3];
+					var y = direction[2];
+					var x = direction[3];
 				}
 
 				while (true) {
-					if ((currentRow + y) > -1 && (currentRow + y) < gridSize.rows && (currentCol + x) > -1 && (currentCol + x) < gridSize.columns) {
-						if (board[currentRow + y][currentCol + x] == player) {
-							count++;
-							currentRow = currentRow + y;
-							currentCol = currentCol + x;	
-						} else {
-							break;
-						}
-						
+					currentRow += y;
+					currentCol += x;
+
+					if (currentRow < 0 || currentRow > gridSize.rows - 1 || currentCol < 0 || currentCol > gridSize.columns - 1) {
+						break;
+					}
+
+					
+					if (board[currentRow][currentCol] == player) {
+						count++;	
 					} else {
 						break;
 					}
+						
 				}
 			}
 
