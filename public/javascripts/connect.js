@@ -72,7 +72,7 @@ function drawBoard(board, yourPlay) {
 
 			if (currentNode == 0) {
 				
-				if (i != 9 && board[i + 1][j] == 0) {
+				if (i != (board.length - 1) && board[i + 1][j] == 0) {
 					clickClass = '';
 				}
 

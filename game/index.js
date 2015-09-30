@@ -2,6 +2,11 @@ var async = require('async');
 
 var gameCount = 0;
 
+var gridSize = {
+	rows: 6,
+	columns: 7
+};
+
 module.exports = function(io) {
 	var games = {};
 	var waiting = [];
@@ -16,17 +21,29 @@ module.exports = function(io) {
 		var done = 'Your opponent has disconnected';
 
 		socket.on('disconnect', function() {
-			var currentGame = games[playerGame[socket.id]];
+			var removed = false;
 
-			if (currentGame) {
-
-				if (currentGame.playerOne.id != socket.id) {
-					currentGame.playerOne.emit('end', done);
-				} else {
-					currentGame.playerTwo.emit('end', done);
+			for (var i = 0; i < waiting.length; i++) {
+				if (waiting[i].id == socket.id) {
+					waiting.splice(i, 1);
+					break;
+					removed = true;
 				}
+			}
 
-				delete games[playerGame[socket.id]];	
+			if (!removed) {
+				var currentGame = games[playerGame[socket.id]];
+
+				if (currentGame) {
+
+					if (currentGame.playerOne.id != socket.id) {
+						currentGame.playerOne.emit('end', done);
+					} else {
+						currentGame.playerTwo.emit('end', done);
+					}
+
+					delete games[playerGame[socket.id]];	
+				}	
 			}
 			
 		});
@@ -86,16 +103,15 @@ module.exports = function(io) {
 	function getBoard() {
 		var board = [];
 
-		for (var i = 0; i < 10; i++) {
+		for (var i = 0; i < gridSize.rows; i++) {
 			var row = [];
 
-			for (var j = 0; j < 10; j++) {
+			for (var j = 0; j < gridSize.columns; j++) {
 				row.push(0);
 			}
 
 			board.push(row);
 		}
-
 		return board;
 	}
 
@@ -128,7 +144,7 @@ module.exports = function(io) {
 				}
 
 				while (true) {
-					if ((currentRow + y) > -1 && (currentRow + y) < 10 && (currentCol + x) > -1 && (currentCol + x) < 10) {
+					if ((currentRow + y) > -1 && (currentRow + y) < gridSize.rows && (currentCol + x) > -1 && (currentCol + x) < gridSize.columns) {
 						if (board[currentRow + y][currentCol + x] == player) {
 							count++;
 							currentRow = currentRow + y;

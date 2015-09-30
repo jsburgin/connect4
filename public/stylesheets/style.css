@@ -14,11 +14,11 @@ p {
 }
 
 .node {
-	width: 15px;
-	height: 15px;
-	border-radius: 15px;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
 	float: left;
-	margin: 2px 3px;
+	margin: 0 2px 2px 0;
 }
 
 .click {
