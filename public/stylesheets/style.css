@@ -1,0 +1,42 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+
+.node {
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	float: left;
+	margin: 2px 3px;
+}
+
+.click {
+	cursor: pointer;
+}
+
+.node.red {
+	background: red;
+}
+
+.node.blue {
+	background: blue;
+}
+
+.node.empty {
+	background: gray;
+}
+
+.turn-card {
+	margin-top: 15px;
+}
